@@ -4,18 +4,29 @@ import TableProdutos from './Produto/ListaProdutos';
 import Vendas from './Produto/ProdutosVendidos';
 import { apiAddProduto, apiGetProdutos, apiAttProduto, apiDelProduto } from './api/produtos.service';
 import FormAtualizarProduto from './Produto/AtualizarProduto';
+import { apiAddVenda, apiAttVenda, apiGetVendas } from './api/vendas.service';
 
 function App() {
 
   const [dadosProdutos, setDadosProdutos] = useState([]);
+  const [vendas, setVendas] = useState([]);
 
   useEffect(() => {
-    const fetchPessoas = async () => {
+    const fetchProdutos = async () => {
       const resultado = await apiGetProdutos();
       setDadosProdutos(resultado);
 
     };
-    fetchPessoas();
+    fetchProdutos();
+    
+  }, []);
+
+  useEffect(() => {
+    const fetchVendas = async () => {
+      const resultado = await apiGetVendas();
+      setVendas(resultado);
+    };
+    fetchVendas();
     
   }, []);
 
@@ -66,31 +77,56 @@ function App() {
     }
   }
 
-  //passar o array vendas inteiro para o banco de dados
-  const [vendas, setVendas] = useState([]);
+
 
   const adicionarVenda = async (produtoVendido) => {
+
+    const dataAtual = new Date();
+    const dataFormatada = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate()).toISOString().split('T')[0];
 
     const index = vendas.findIndex(
       (venda) => venda.nomeProduto === produtoVendido.nomeProduto
     );
 
+    const atual = vendas.find(
+      (venda) =>  venda.nomeProduto === produtoVendido.nomeProduto
+    );
+    let dataVenda = new Date(atual.dataVenda);
+    let dataAtualFormatada = dataVenda.toISOString().split('T')[0];
+
+
+      //soma um na tabela vendas
     if (produtoVendido.quantidadeProduto > 0){
-      if (index !== -1) {
-        // Se o produto já existe, atualiza a quantidade
+      if (index !== -1 && dataAtualFormatada === dataFormatada) {
         const vendasAtualizadas = [...vendas];
-        vendasAtualizadas[index] = {
-          ...vendasAtualizadas[index],
-          quantidadeProduto:
-            Number(vendasAtualizadas[index].quantidadeProduto) +
-            1,
-        };
-        setVendas(vendasAtualizadas);
+        await apiAttVenda({
+          idProduto: produtoVendido.idProduto,
+          nomeProduto: produtoVendido.nomeProduto,
+          quantidadeProduto: vendasAtualizadas[index].quantidadeProduto + 1,
+          precoProduto: produtoVendido.precoProduto,
+          dataVenda: dataFormatada
+        });
+
+        const novasVendas = await apiGetVendas();
+        setVendas(novasVendas);
+
+
+
       } else {
-        setVendas([...vendas, { ...produtoVendido, quantidadeProduto: 1 }]);
+        await apiAddVenda({
+          idProduto: produtoVendido.idProduto,
+          nomeProduto: produtoVendido.nomeProduto,
+          quantidadeProduto: 1,
+          precoProduto: produtoVendido.precoProduto,
+          dataVenda: dataFormatada
+        });
+        const novasVendas = await apiGetVendas();
+        setVendas(novasVendas);
+        //setVendas([...vendas, { ...produtoVendido, quantidadeProduto: 1, dataVenda: dataFormatada }]);
       }
     }
 
+    // tira um na tabela produtos
     const promessasAtualizacao = dadosProdutos.map(async (produto) => {
       if (produto.nomeProduto === produtoVendido.nomeProduto) {
         if (produto.quantidadeProduto > 0) {
@@ -109,9 +145,6 @@ function App() {
       return produto;
     });
     const estoqueAtualizado = await Promise.all(promessasAtualizacao);
-  
-      const novaListaDeProdutos = await apiGetProdutos();
-       setDadosProdutos(novaListaDeProdutos);
     
        setDadosProdutos(estoqueAtualizado)
   };
