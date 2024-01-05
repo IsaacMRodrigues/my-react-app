@@ -5,6 +5,7 @@ const getAll = async () => {
 
   // Mapeie os resultados e retorne os objetos desejados
   const vendas = rows.map((row) => ({
+    idVenda: row.idVenda,
     idProduto: row.idProduto,
     nomeProduto: row.nomeProduto,
     quantidadeProduto: row.quantidadeProduto,
@@ -16,7 +17,6 @@ const getAll = async () => {
 };
 
 const inserirVenda = async (vendaData) => {
-  console.log('Chegou aqui' + vendaData);
   try {
     const {idProduto, nomeProduto, quantidadeProduto, precoProduto, dataVenda } = vendaData;
     const query = 'INSERT INTO vendas (idProduto, nomeProduto, quantidadeProduto, precoProduto, dataVenda) VALUES (?, ?, ?, ?, ?)';
@@ -32,11 +32,11 @@ const inserirVenda = async (vendaData) => {
 
 const atualizarVenda = async (vendaData) => {
   try {
-    const { idProduto, nomeProduto, quantidadeProduto, precoProduto, dataVenda } = vendaData;
+    const { quantidadeProduto, idVenda } = vendaData;
 
     // Lógica para atualizar o produto no banco de dados
-    const query = 'UPDATE vendas SET nomeProduto = ?, quantidadeProduto = ?, precoProduto = ?, dataVenda = ? WHERE idProduto = ?';
-    const values = [nomeProduto, quantidadeProduto, precoProduto, dataVenda, idProduto];
+    const query = 'UPDATE vendas SET quantidadeProduto = ? WHERE idVenda = ?';
+    const values = [quantidadeProduto, idVenda];
     await connection.execute(query, values);
 
     // Recupere o produto atualizado, se necessário

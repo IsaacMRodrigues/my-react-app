@@ -10,6 +10,11 @@ const FormAtualizarProduto = ({ atualizar, produto }) => {
   const salvar = (event) => {
     event.preventDefault();
 
+    if (!nomeProduto ||  precoProduto <= 0) {
+      alert("Por favor, preencha todos os campos antes de cadastrar.");
+      return;
+    } else {
+
     const novoProduto = {idProduto, nomeProduto, quantidadeProduto, precoProduto };
 
     
@@ -18,6 +23,7 @@ const FormAtualizarProduto = ({ atualizar, produto }) => {
     setNomeProduto("");
     setQuantidadeProduto("");
     setPrecoProduto("");
+    }
   };
 
   return (

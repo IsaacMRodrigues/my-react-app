@@ -1,6 +1,8 @@
 const express = require('express');
 const produtosController = require('./controllers/produtosController');
 const vendasController = require('./controllers/vendasController');
+const pessoasController = require('./controllers/pessoasController');
+const garantiasController = require('./controllers/garantiasController');
 
 const router = express.Router();
 
@@ -15,5 +17,14 @@ router.delete('/deletar', produtosController.deletarProduto);
 router.get('/vendas', vendasController.getAll);
 router.post('/vendas', vendasController.inserirVenda);
 router.put('/attvendas', vendasController.atualizarVenda);
+
+//COMPRAS FIADAS
+router.get('/pessoas', pessoasController.getAll);
+router.post('/pessoas', pessoasController.inserirPessoa);
+router.put('/attpessoa', pessoasController.atualizarPessoa);
+
+//GARANTIA
+router.get('/garantias', garantiasController.getAll);
+router.post('/garantias', garantiasController.inserirGarantia);
 
 module.exports = router;

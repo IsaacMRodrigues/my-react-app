@@ -5,12 +5,43 @@ import Vendas from './Produto/ProdutosVendidos';
 import { apiAddProduto, apiGetProdutos, apiAttProduto, apiDelProduto } from './api/produtos.service';
 import FormAtualizarProduto from './Produto/AtualizarProduto';
 import { apiAddVenda, apiAttVenda, apiGetVendas } from './api/vendas.service';
+import TablePessoas from './Pessoa/ListaPessoas';
+import { apiAddPessoa, apiGetPessoas, apiAttPessoa } from './api/pessoas.service';
+import FormCadastroPessoa from './Pessoa/CadastroPessoa';
+import TableGarantias from './Garantia/ListaGarantias';
+import { apiGetGarantias, apiAddGarantia } from './api/garantias.service';
+import FormCadastroGarantia from './Garantia/CadastroGarantias';
 
 function App() {
-
+  const [pessoas, setPessoas] = useState([]);
+  const [garantias, setGarantias] = useState([]);
   const [dadosProdutos, setDadosProdutos] = useState([]);
   const [vendas, setVendas] = useState([]);
 
+
+  //GARANTIAS
+  useEffect(() => {
+    const fetchGarantias = async () => {
+      const resultado = await apiGetGarantias();
+      setGarantias(resultado);
+
+    };
+    fetchGarantias();
+    
+  }, []);
+
+  //PAGAMENTOS
+  useEffect(() => {
+    const fetchPessoas = async () => {
+      const resultado = await apiGetPessoas();
+      setPessoas(resultado);
+
+    };
+    fetchPessoas();
+    
+  }, []);
+
+  //PRODUTOS
   useEffect(() => {
     const fetchProdutos = async () => {
       const resultado = await apiGetProdutos();
@@ -21,6 +52,7 @@ function App() {
     
   }, []);
 
+  //VENDAS
   useEffect(() => {
     const fetchVendas = async () => {
       const resultado = await apiGetVendas();
@@ -39,6 +71,28 @@ function App() {
   
       const novaListaDeProdutos = await apiGetProdutos();
       setDadosProdutos(novaListaDeProdutos);
+    } catch (error) {
+      console.error('Erro ao chamar apiAddProduto:', error);
+    }
+  }
+
+  const salvarPessoa = async (novaPessoa) => {
+    try {
+      await apiAddPessoa(novaPessoa);
+  
+      const novaListaDePessoas = await apiGetPessoas();
+      setPessoas(novaListaDePessoas);
+    } catch (error) {
+      console.error('Erro ao chamar apiAddProduto:', error);
+    }
+  }
+
+  const salvarGarantia = async (novaGarantia) => {
+    try {
+      await apiAddGarantia(novaGarantia);
+
+      const novaListaDeGarantias = await apiGetGarantias();
+      setGarantias(novaListaDeGarantias);
     } catch (error) {
       console.error('Erro ao chamar apiAddProduto:', error);
     }
@@ -84,34 +138,48 @@ function App() {
     const dataAtual = new Date();
     const dataFormatada = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate()).toISOString().split('T')[0];
 
-    const index = vendas.findIndex(
-      (venda) => venda.nomeProduto === produtoVendido.nomeProduto
-    );
 
-    const atual = vendas.find(
-      (venda) =>  venda.nomeProduto === produtoVendido.nomeProduto
-    );
-    let dataVenda = new Date(atual.dataVenda);
-    let dataAtualFormatada = dataVenda.toISOString().split('T')[0];
+
+    const teste = vendas.find((venda) => {
+      const vendaDataFormatada = new Date(venda.dataVenda).toISOString().split('T')[0];
+      return venda.nomeProduto === produtoVendido.nomeProduto && vendaDataFormatada === dataFormatada;
+    });
+
+
+    let dataAtualFormatada = dataFormatada
+
+    if (teste) {
+        let dataVenda = new Date(teste.dataVenda);
+        dataAtualFormatada = dataVenda.toISOString().split('T')[0];
+      }else {
+        let dataNula = new Date(1999, 0, 0)
+        dataAtualFormatada = new Date(dataNula.getFullYear(), dataAtual.getMonth(), dataAtual.getDate()).toISOString().split('T')[0];;
+      }
+    
 
 
       //soma um na tabela vendas
     if (produtoVendido.quantidadeProduto > 0){
-      if (index !== -1 && dataAtualFormatada === dataFormatada) {
+      console.log(dataAtualFormatada);
+      console.log(dataFormatada)
+      if (dataAtualFormatada === dataFormatada) {
         const vendasAtualizadas = [...vendas];
+        
+        const vendaCerta = vendasAtualizadas.find((vendaCerta) => {
+          return vendaCerta.idVenda === teste.idVenda
+        })
+
         await apiAttVenda({
+          idVenda: teste.idVenda,
           idProduto: produtoVendido.idProduto,
           nomeProduto: produtoVendido.nomeProduto,
-          quantidadeProduto: vendasAtualizadas[index].quantidadeProduto + 1,
+          quantidadeProduto: vendaCerta.quantidadeProduto + 1,
           precoProduto: produtoVendido.precoProduto,
           dataVenda: dataFormatada
         });
 
         const novasVendas = await apiGetVendas();
         setVendas(novasVendas);
-
-
-
       } else {
         await apiAddVenda({
           idProduto: produtoVendido.idProduto,
@@ -149,6 +217,19 @@ function App() {
        setDadosProdutos(estoqueAtualizado)
   };
 
+  const pessoaParaAtualizar = async (novaPessoa) => {
+    try {
+
+      await apiAttPessoa(novaPessoa);
+  
+      const novaListaDePessoas = await apiGetPessoas();
+      setPessoas(novaListaDePessoas);
+    } catch (error) {
+      console.error('Erro ao chamar apiAddPessoa:', error);
+    }
+
+  }
+
 
   return (
     <>
@@ -156,6 +237,12 @@ function App() {
     {mostrarAtt && <FormAtualizarProduto atualizar={atualizarProduto} produto={dadoProduto}/>}
     <TableProdutos produtos={dadosProdutos} adicionarVenda={adicionarVenda} produtoParaAtualizar={produtoParaAtualizar} produtoParaRemover={produtoParaRemover} />
     <Vendas vendas={vendas} />
+    <FormCadastroPessoa onSubmit={salvarPessoa}/>
+    <TablePessoas pessoas={pessoas} pessoaParaAtualizar={pessoaParaAtualizar}/>
+    <FormCadastroGarantia onSubmit={salvarGarantia}/>
+    <TableGarantias garantias={garantias}/>
+
+
     </>
   );
 }

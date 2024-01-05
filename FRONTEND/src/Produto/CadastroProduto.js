@@ -8,7 +8,12 @@ const FormCadastroProduto = ({ onSubmit }) => {
   const salvar = (event) => {
     event.preventDefault();
 
-    const novoProduto = { nomeProduto, quantidadeProduto, precoProduto };
+    if (!nomeProduto || precoProduto <= 0) {
+      alert("Por favor, preencha todos os campos antes de cadastrar.");
+      return;
+    } else {
+
+      const novoProduto = { nomeProduto, quantidadeProduto, precoProduto };
 
     if (onSubmit) {
       onSubmit(novoProduto);
@@ -17,6 +22,10 @@ const FormCadastroProduto = ({ onSubmit }) => {
     setNomeProduto("");
     setQuantidadeProduto("");
     setPrecoProduto("");
+
+    }
+
+    
   };
 
   return (
