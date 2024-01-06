@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const FormAtualizarProduto = ({ atualizar, produto }) => {
 
-  const [idProduto, setIdProduto] = useState(produto.idProduto)
+  const [idProduto ] = useState(produto.idProduto)
   const [nomeProduto, setNomeProduto] = useState(produto.nomeProduto);
   const [quantidadeProduto, setQuantidadeProduto] = useState(produto.quantidadeProduto);
   const [precoProduto, setPrecoProduto] = useState(produto.precoProduto);
@@ -27,38 +29,22 @@ const FormAtualizarProduto = ({ atualizar, produto }) => {
   };
 
   return (
+    <div className="m-5">
     <form id="signForm" onSubmit={salvar}>
-      <h2 id="titulo">Atualizar</h2>
-      <label htmlFor="nomeProduto">Nome do Produto</label>
-      <input
-        id="nomeProduto"
-        label="Nome do Produto"
-        variant="outlined"
-        value={nomeProduto}
-        onChange={(e) => setNomeProduto(e.target.value)}
-      />
-      <label htmlFor="quantidadeProduto">Quantidade</label>
-      <input
-        id="quantidadeProduto"
-        type="number"
-        label="Quantidade do Produto"
-        variant="outlined"
-        value={quantidadeProduto}
-        onChange={(e) => setQuantidadeProduto(e.target.value)}
-      />
-      <label htmlFor="preco">Preço</label>
-      <input
-        id="preco"
-        type="number"
-        label="Preço do Produto"
-        value={precoProduto}
-        onChange={(e) => setPrecoProduto(e.target.value)}
-      />
-
-      <button type="submit" className="botoera">
+    <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Editar Produto</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      
+      <TextField style={{margin: '25px'}} id="outlined-basic" label="Nome do Produto" variant="outlined" value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)}  />
+      <TextField style={{margin: '25px'}} id="outlined-basic" label="Quantidade do Produto" variant="outlined" value={quantidadeProduto} onChange={(e) => setQuantidadeProduto(e.target.value)}  />
+      <TextField style={{margin: '25px'}} id="outlined-basic" label="Preço do Produto" variant="outlined" value={precoProduto} onChange={(e) => setPrecoProduto(e.target.value)}  />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+      <Button type="submit" variant="contained">
         Atualizar
-      </button>
+      </Button>
+      </div>
     </form>
+    </div>
   );
 };
 

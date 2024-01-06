@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from 'react-bootstrap/Button';
 
 const FormCadastroPessoa = ({ onSubmit }) => {
   const [nomePessoa, setNomePessoa] = useState("");
@@ -79,9 +80,9 @@ const FormCadastroPessoa = ({ onSubmit }) => {
         onChange={(e) => setDescricaoCompra(e.target.value)}
       />
 
-      <button type="submit" className="botoera">
+      <Button variant="primary" type="submit" className="botoera">
         Cadastrar
-      </button>
+      </Button>
     </form>
   );
 };

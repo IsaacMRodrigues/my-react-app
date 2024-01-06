@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 
 const TablePessoas = ({ pessoas, pessoaParaAtualizar }) => {
   const [mostrarTodos, setMostrarTodos] = useState(false);
@@ -46,9 +48,9 @@ const TablePessoas = ({ pessoas, pessoaParaAtualizar }) => {
               </td>
               {pessoa.pago === 0 && (
                 <td>
-                  <button onClick={() => pessoaParaAtualizar(pessoa)}>
+                  <Button variant="primary" onClick={() => pessoaParaAtualizar(pessoa)}>
                     Pagou
-                  </button>
+                  </Button>
                 </td>
               )}
             </tr>

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 
 const FormCadastroProduto = ({ onSubmit }) => {
   const [nomeProduto, setNomeProduto] = useState("");
@@ -29,38 +32,22 @@ const FormCadastroProduto = ({ onSubmit }) => {
   };
 
   return (
+    <div className="m-5">
     <form id="signForm" onSubmit={salvar}>
-      <h2 id="titulo">Cadastro</h2>
-      <label htmlFor="nomeProduto">Nome do Produto</label>
-      <input
-        id="nomeProduto"
-        label="Nome do Produto"
-        variant="outlined"
-        value={nomeProduto}
-        onChange={(e) => setNomeProduto(e.target.value)}
-      />
-      <label htmlFor="quantidadeProduto">Quantidade</label>
-      <input
-        id="quantidadeProduto"
-        type="number"
-        label="Quantidade do Produto"
-        variant="outlined"
-        value={quantidadeProduto}
-        onChange={(e) => setQuantidadeProduto(e.target.value)}
-      />
-      <label htmlFor="preco">Preço</label>
-      <input
-        id="preco"
-        type="number"
-        label="Preço do Produto"
-        value={precoProduto}
-        onChange={(e) => setPrecoProduto(e.target.value)}
-      />
-
-      <button type="submit" className="botoera">
+    <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Cadastro de Produto</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      
+      <TextField style={{margin: '25px'}} id="outlined-basic" label="Nome do Produto" variant="outlined" value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)}  />
+      <TextField type="number" style={{margin: '25px'}} id="outlined-basic" label="Quantidade do Produto" variant="outlined" value={quantidadeProduto} onChange={(e) => setQuantidadeProduto(e.target.value)}  />
+      <TextField type="number" style={{margin: '25px'}} id="outlined-basic" label="Preço do Produto" variant="outlined" value={precoProduto} onChange={(e) => setPrecoProduto(e.target.value)}  />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+      <Button type="submit" variant="contained">
         Cadastrar
-      </button>
+      </Button>
+      </div>
     </form>
+    </div>  
   );
 };
 

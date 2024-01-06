@@ -11,6 +11,7 @@ import FormCadastroPessoa from './Pessoa/CadastroPessoa';
 import TableGarantias from './Garantia/ListaGarantias';
 import { apiGetGarantias, apiAddGarantia } from './api/garantias.service';
 import FormCadastroGarantia from './Garantia/CadastroGarantias';
+import './App.css';
 
 function App() {
   const [pessoas, setPessoas] = useState([]);
@@ -229,19 +230,34 @@ function App() {
     }
 
   }
+  const [componenteAtivo, setComponenteAtivo] = useState('produto');
+
+  const mostrarComponente = (componente) => {
+    setComponenteAtivo(componente);
+  };
 
 
   return (
     <>
-    {mostrarAdd && <FormCadastroProduto onSubmit={salvar} />}
-    {mostrarAtt && <FormAtualizarProduto atualizar={atualizarProduto} produto={dadoProduto}/>}
-    <TableProdutos produtos={dadosProdutos} adicionarVenda={adicionarVenda} produtoParaAtualizar={produtoParaAtualizar} produtoParaRemover={produtoParaRemover} />
-    <Vendas vendas={vendas} />
-    <FormCadastroPessoa onSubmit={salvarPessoa}/>
-    <TablePessoas pessoas={pessoas} pessoaParaAtualizar={pessoaParaAtualizar}/>
-    <FormCadastroGarantia onSubmit={salvarGarantia}/>
-    <TableGarantias garantias={garantias}/>
-
+        <div>
+      {'INICIO'}
+      <div className='menu-container'>
+      <button onClick={() => mostrarComponente('produto')}>Produtos</button>
+        <button onClick={() => mostrarComponente('vendas')}>Vendas</button>
+        <button onClick={() => mostrarComponente('pessoa')}>Dinheiro a receber</button>
+        <button onClick={() => mostrarComponente('garantia')}>Garantias</button>
+      </div>
+      </div>
+      <div className='content-container'>
+    {componenteAtivo === 'produto' && mostrarAdd && <FormCadastroProduto onSubmit={salvar} />}
+    {componenteAtivo === 'produto' && mostrarAtt && <FormAtualizarProduto atualizar={atualizarProduto} produto={dadoProduto}/>}
+    {componenteAtivo === 'produto' && <TableProdutos produtos={dadosProdutos} adicionarVenda={adicionarVenda} produtoParaAtualizar={produtoParaAtualizar} produtoParaRemover={produtoParaRemover} />}
+    {componenteAtivo === 'vendas' && <Vendas vendas={vendas} />}
+    {componenteAtivo === 'pessoa' && <FormCadastroPessoa onSubmit={salvarPessoa}/>}
+    {componenteAtivo === 'pessoa' &&<TablePessoas pessoas={pessoas} pessoaParaAtualizar={pessoaParaAtualizar}/>}
+    {componenteAtivo === 'garantia' && <FormCadastroGarantia onSubmit={salvarGarantia}/>}
+    {componenteAtivo === 'garantia' && <TableGarantias garantias={garantias}/>}
+    </div>
 
     </>
   );

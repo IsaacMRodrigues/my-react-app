@@ -1,4 +1,18 @@
 import React, { useState } from "react";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 
 const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produtoParaRemover}) => {
 
@@ -11,39 +25,61 @@ const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produto
 
   return (
     <div className="m-5">
+      <Box
+      sx={{
+        width: 1000,
+        maxWidth: '100%',
+        margin: 'auto',
+        justifyContent: 'center', 
+        alignItems: 'center',
+        marginBottom: '50px'
 
-<input
-        type="text"
-        placeholder="Pesquisar por nome do produto"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome do Produto</th>
-            <th scope="col">Quantidade do Produto</th>
-            <th scope="col">Valor do Produto</th>
-          </tr>
-        </thead>
-        <tbody>
+      }}
+    >
+      <TextField fullWidth label="Procurar" id="fullWidth" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} InputProps={{
+        startAdornment: (
+          <SearchIcon style={{ color: 'gray' }} />
+        ),
+      }} />
+    </Box>
+
+
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell align="center">Nome do Produto</TableCell>
+            <TableCell align="center">Quantidade do Produto</TableCell>
+            <TableCell align="center">Valor do Produto</TableCell>
+            <TableCell align="center">#</TableCell>
+            <TableCell align="center">#</TableCell>
+            <TableCell align="center">#</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {filteredProdutos.map((produto) => (
-            <tr key={produto.idProduto}>
-              <td>{produto.idProduto}</td>
-              <td>{produto.nomeProduto}</td>
-              <td>{produto.quantidadeProduto}</td>
-              <td>R$ {produto.precoProduto}</td>
-              <button onClick={() => produtoParaAtualizar(produto)}>Editar</button>
-              <button onClick={() => produtoParaRemover(produto)}>Remover</button>
-              <button onClick={() => adicionarVenda(produto)}>
-                  Adicionar à Venda
-                </button>
-            </tr>
+            <TableRow
+              key={produto.idProduto}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {produto.idProduto}
+              </TableCell>
+              <TableCell align="center">{produto.nomeProduto}</TableCell>
+              <TableCell align="center">{produto.quantidadeProduto}</TableCell>
+              <TableCell align="center">R$ {produto.precoProduto}</TableCell>
+              <TableCell align="center"><Button variant="outlined" startIcon={<EditIcon/>} onClick={() => produtoParaAtualizar(produto)}>Editar</Button></TableCell>
+              <TableCell align="center"><Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => produtoParaRemover(produto)}>Excluir</Button></TableCell>
+              <TableCell align="center"><Button variant="outlined" startIcon={<AddShoppingCartIcon/>} onClick={() => adicionarVenda(produto)}>Adicionar à Venda</Button></TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+    </TableContainer>
     </div>
+
+    
   );
 };
 
