@@ -58,7 +58,7 @@ const Vendas = ({ vendas }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       </div>
-       <TableContainer component={Paper} style={{margin: '50px'}}>
+       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -85,7 +85,6 @@ const Vendas = ({ vendas }) => {
             </TableRow>
           ))}
         </TableBody>
-        
       </Table>
       {filteredProdutos.length <= 0 && (
             <h3 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Não há vendas nessa data</h3>
@@ -93,7 +92,7 @@ const Vendas = ({ vendas }) => {
     </TableContainer>
      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
     <Button style={{margin: '25px'}} variant="contained">Valor total do dia: R$ {calcularValorTotalGeral()}</Button>
-    <Button style={{margin: '25px'}} variant="contained">Valor Mensal: R$ {calcularValorMensal()}</Button>
+    <Button style={{margin: '25px'}}variant="contained">Valor Mensal: R$ {calcularValorMensal()}</Button>
     </div>
     </div>
   );

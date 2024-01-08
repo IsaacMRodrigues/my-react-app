@@ -12,6 +12,7 @@ const getAll = async () => {
     valorCompra: row.valorCompra,
     descricaoCompra: row.descricaoCompra,
     pago: row.pago,
+    dataPagamento: row.dataPagamento,
   }));
   return produtos;
 };
@@ -49,11 +50,11 @@ const inserirPessoa = async (pessoaData) => {
 
 const atualizarPessoa = async (vendaData) => {
   try {
-    const { idPessoa } = vendaData;
+    const { idPessoa, dataPagamento } = vendaData;
     
     // Lógica para atualizar o produto no banco de dados
-    const query = 'UPDATE pessoas SET pago = ? WHERE idPessoa = ?';
-    const values = [1, idPessoa];
+    const query = 'UPDATE pessoas SET pago = ?, dataPagamento = ? WHERE idPessoa = ?';
+    const values = [1, dataPagamento, idPessoa];
     await connection.execute(query, values);
     
     // Recupere o produto atualizado, se necessário
@@ -68,8 +69,10 @@ const atualizarPessoa = async (vendaData) => {
     
 };
 
+
+
 module.exports = {
   getAll,
   inserirPessoa,
-  atualizarPessoa
+  atualizarPessoa,
 };

@@ -26,5 +26,6 @@ router.put('/attpessoa', pessoasController.atualizarPessoa);
 //GARANTIA
 router.get('/garantias', garantiasController.getAll);
 router.post('/garantias', garantiasController.inserirGarantia);
+router.delete('/deletarg', garantiasController.deletarGarantia);
 
 module.exports = router;

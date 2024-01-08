@@ -18,6 +18,17 @@ const inserirGarantia = async (req, res) => {
       .json({ erro: 'Erro ao inserir Garantia no banco de dados' });
   }
 };
+
+const deletarGarantia = async (req, res) => {
+  try {
+    await garantiasModel.deletarGarantia(req.body);
+    return res.status(201).json({ mensagem: 'Produto deletado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao deletar produto:', error.message);
+
+    return res.status(500).json({ erro: 'Erro ao deletar produto no banco de dados' });
+  }
+};
   
 
 
@@ -25,4 +36,5 @@ const inserirGarantia = async (req, res) => {
 module.exports = {
   getAll,
   inserirGarantia,
+  deletarGarantia
 };

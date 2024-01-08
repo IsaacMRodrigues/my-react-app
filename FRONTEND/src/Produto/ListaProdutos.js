@@ -32,7 +32,8 @@ const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produto
         margin: 'auto',
         justifyContent: 'center', 
         alignItems: 'center',
-        marginBottom: '50px'
+        marginBottom: '50px',
+        marginTop: '20px'
 
       }}
     >

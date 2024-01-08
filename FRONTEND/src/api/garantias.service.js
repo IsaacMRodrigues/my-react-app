@@ -35,4 +35,25 @@ const apiAddGarantia = async (novaGarantia) => {
     }
   };
 
-export {apiGetGarantias, apiAddGarantia};
+  const apiDelGarantia = async (garantiaRemover) => {
+    try {
+      const res = await fetch(`${URL_API}/deletarg`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(garantiaRemover),
+      });
+      if (!res.ok) {
+        throw new Error('Houve erro na remoção do produto')
+      }
+  
+      return await res.json();
+  
+    } catch (error) {
+      console.error('Erro em apiDelProduto:', error);
+      throw new Error(error.message)
+    }
+  };
+
+export {apiGetGarantias, apiAddGarantia, apiDelGarantia};

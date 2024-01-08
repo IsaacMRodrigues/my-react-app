@@ -9,9 +9,10 @@ import TablePessoas from './Pessoa/ListaPessoas';
 import { apiAddPessoa, apiGetPessoas, apiAttPessoa } from './api/pessoas.service';
 import FormCadastroPessoa from './Pessoa/CadastroPessoa';
 import TableGarantias from './Garantia/ListaGarantias';
-import { apiGetGarantias, apiAddGarantia } from './api/garantias.service';
+import { apiGetGarantias, apiAddGarantia, apiDelGarantia } from './api/garantias.service';
 import FormCadastroGarantia from './Garantia/CadastroGarantias';
 import './App.css';
+import TableServicos from './Produto/ListaServicos';
 
 function App() {
   const [pessoas, setPessoas] = useState([]);
@@ -127,6 +128,17 @@ function App() {
   
       const novaListaDeProdutos = await apiGetProdutos();
       setDadosProdutos(novaListaDeProdutos);
+    } catch (error) {
+      console.error('Erro ao chamar apiAddProduto:', error);
+    }
+  }
+
+  const garantiaParaRemover = async (garantia) => {
+    try {
+      await apiDelGarantia(garantia);
+  
+      const novaListaDeProdutos = await apiGetGarantias();
+      setGarantias(novaListaDeProdutos);
     } catch (error) {
       console.error('Erro ao chamar apiAddProduto:', error);
     }
@@ -252,11 +264,13 @@ function App() {
     {componenteAtivo === 'produto' && mostrarAdd && <FormCadastroProduto onSubmit={salvar} />}
     {componenteAtivo === 'produto' && mostrarAtt && <FormAtualizarProduto atualizar={atualizarProduto} produto={dadoProduto}/>}
     {componenteAtivo === 'produto' && <TableProdutos produtos={dadosProdutos} adicionarVenda={adicionarVenda} produtoParaAtualizar={produtoParaAtualizar} produtoParaRemover={produtoParaRemover} />}
+    {componenteAtivo === 'vendas' && <TableServicos adicionarVenda={adicionarVenda} />}
     {componenteAtivo === 'vendas' && <Vendas vendas={vendas} />}
     {componenteAtivo === 'pessoa' && <FormCadastroPessoa onSubmit={salvarPessoa}/>}
     {componenteAtivo === 'pessoa' &&<TablePessoas pessoas={pessoas} pessoaParaAtualizar={pessoaParaAtualizar}/>}
     {componenteAtivo === 'garantia' && <FormCadastroGarantia onSubmit={salvarGarantia}/>}
-    {componenteAtivo === 'garantia' && <TableGarantias garantias={garantias}/>}
+    {componenteAtivo === 'garantia' && <TableGarantias garantias={garantias} garantiaParaRemover={garantiaParaRemover} />}
+    
     </div>
 
     </>

@@ -34,10 +34,25 @@ const inserirGarantia = async (garantiaData) => {
   }
 };
 
+const deletarGarantia = async (garantiaData) => {
+  try {
+    // Lógica para deletar o produto no banco de dados
+    const query = 'DELETE FROM garantias WHERE idGarantia = ?';
+    const values = [garantiaData.idGarantia];
+    await connection.execute(query, values);
+
+    console.log('Garantia removida com sucesso.');
+  } catch (error) {
+    console.error('Erro ao deletar produto no banco de dados:', error);
+    throw new Error('Erro ao deletar produto no banco de dados');
+  }
+};
+
 
 
 
 module.exports = {
   getAll,
-  inserirGarantia
+  inserirGarantia,
+  deletarGarantia
 };

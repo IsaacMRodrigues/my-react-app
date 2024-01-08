@@ -20,6 +20,7 @@ const inserirPessoa = async (req, res) => {
 };
 
 const atualizarPessoa = async (req, res) => {
+  console.log(req.body);
   try {
     await pessoasModel.atualizarPessoa(req.body);
     return res.status(201).json({ mensagem: 'Pessoa atualizada com sucesso' });
