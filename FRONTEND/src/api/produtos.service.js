@@ -24,14 +24,13 @@ const apiAddProduto = async (novoProduto) => {
       body: JSON.stringify(novoProduto),
     });
     if (!res.ok) {
-      throw new Error('Houve erro na adição do produto')
+      throw new Error("Houve erro na adição do produto");
     }
 
     return await res.json();
-
   } catch (error) {
-    console.error('Erro em apiAddProduto:', error);
-    throw new Error(error.message)
+    console.error("Erro em apiAddProduto:", error);
+    throw new Error(error.message);
   }
 };
 
@@ -45,14 +44,13 @@ const apiAttProduto = async (novoProduto) => {
       body: JSON.stringify(novoProduto),
     });
     if (!res.ok) {
-      throw new Error('Houve erro na atualização do produto')
+      throw new Error("Houve erro na atualização do produto");
     }
 
     return await res.json();
-
   } catch (error) {
-    console.error('Erro em apiAttProduto:', error);
-    throw new Error(error.message)
+    console.error("Erro em apiAttProduto:", error);
+    throw new Error(error.message);
   }
 };
 
@@ -66,16 +64,14 @@ const apiDelProduto = async (produtoRemover) => {
       body: JSON.stringify(produtoRemover),
     });
     if (!res.ok) {
-      throw new Error('Houve erro na remoção do produto')
+      throw new Error("Houve erro na remoção do produto");
     }
 
     return await res.json();
-
   } catch (error) {
-    console.error('Erro em apiDelProduto:', error);
-    throw new Error(error.message)
+    console.error("Erro em apiDelProduto:", error);
+    throw new Error(error.message);
   }
 };
 
-
-export {apiGetProdutos, apiAddProduto, apiAttProduto, apiDelProduto };
+export { apiGetProdutos, apiAddProduto, apiAttProduto, apiDelProduto };

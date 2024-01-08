@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import "../App.css";
 
 const FormCadastroGarantia = ({ onSubmit }) => {
   const [nomePessoa, setNomePessoa] = useState("");
@@ -15,12 +16,9 @@ const FormCadastroGarantia = ({ onSubmit }) => {
       alert("Por favor, preencha todos os campos antes de cadastrar.");
       return;
     } else {
-
       const dataAtual = new Date();
       dataAtual.setMonth(dataAtual.getMonth() + mesesGarantia);
-      const dataCompraObj = new Date(dataAtual);
-      const dataFormatada = new Date(dataCompraObj).toISOString().split('T')[0];
-
+      const dataFormatada = new Date(dataAtual).toISOString().split("T")[0];
 
       const novaGarantia = {
         nomePessoa,
@@ -42,17 +40,53 @@ const FormCadastroGarantia = ({ onSubmit }) => {
 
   return (
     <form id="signForm" onSubmit={salvar}>
-      <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Cadastro</h2>
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <TextField style={{margin: '25px'}} id="outlined-basic" label="Nome da Pessoa" variant="outlined" value={nomePessoa} onChange={(e) => setNomePessoa(e.target.value)}  />
-      <TextField style={{margin: '25px'}} id="outlined-basic" label="Telefone" variant="outlined" value={telefonePessoa} onChange={(e) => setTelefonePessoa(e.target.value)}  />
-      <TextField style={{margin: '25px'}} id="outlined-basic" label="Produto" variant="outlined" value={produtoPessoa} onChange={(e) => setProdutoPessoa(e.target.value)}  />
-      <TextField style={{margin: '25px'}} id="outlined-basic" label="Garantia em meses" variant="outlined" value={mesesGarantia} onChange={(e) => setMesesGarantia(e.target.value)}  />
+      <h2
+        className="padrao"
+      >
+        Cadastro
+      </h2>
+      <div
+        className="padrao"
+      >
+        <TextField
+          style={{margin: '15px'}}
+          id="outlined-basic"
+          label="Nome da Pessoa"
+          variant="outlined"
+          value={nomePessoa}
+          onChange={(e) => setNomePessoa(e.target.value)}
+        />
+        <TextField
+          style={{margin: '15px'}}
+          id="outlined-basic"
+          label="Telefone"
+          variant="outlined"
+          value={telefonePessoa}
+          onChange={(e) => setTelefonePessoa(e.target.value)}
+        />
+        <TextField
+          style={{margin: '15px'}}
+          id="outlined-basic"
+          label="Produto"
+          variant="outlined"
+          value={produtoPessoa}
+          onChange={(e) => setProdutoPessoa(e.target.value)}
+        />
+        <TextField
+          style={{margin: '15px'}}
+          id="outlined-basic"
+          label="Garantia em meses"
+          variant="outlined"
+          value={mesesGarantia}
+          onChange={(e) => setMesesGarantia(e.target.value)}
+        />
       </div>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <Button variant="contained" type="submit">
-        Cadastrar
-      </Button>
+      <div
+        className="padrao m-25"
+      >
+        <Button variant="contained" type="submit">
+          Cadastrar
+        </Button>
       </div>
     </form>
   );

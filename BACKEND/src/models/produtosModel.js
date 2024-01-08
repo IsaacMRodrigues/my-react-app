@@ -3,7 +3,6 @@ const connection = require('./connection');
 const getAll = async () => {
   const [rows] = await connection.execute('SELECT * FROM teste');
 
-  // Mapeie os resultados e retorne os objetos desejados
   const produtos = rows.map((row) => ({
     idProduto: row.idProduto,
     nomeProduto: row.nomeProduto,
@@ -17,17 +16,10 @@ const getAll = async () => {
 const inserirProduto = async (produtoData) => {
   try {
     const { nomeProduto, quantidadeProduto, precoProduto } = produtoData;
-    const query = 'INSERT INTO teste (nomeProduto, quantidadeProduto, precoProduto) VALUES (?, ?, ?)';
+    const query =
+      'INSERT INTO teste (nomeProduto, quantidadeProduto, precoProduto) VALUES (?, ?, ?)';
     const values = [nomeProduto, quantidadeProduto, precoProduto];
-    const [result] = await connection.execute(query, values);
-
-    // Recupere o ID do novo produto inserido, se necessário
-    const novoProdutoId = result.insertId;
-
-    // Recupere o novo produto inserido, se necessário
-    const [novoProduto] = await connection.execute('SELECT * FROM teste WHERE idProduto = ?', [novoProdutoId]);
-
-    return novoProduto;
+    await connection.execute(query, values);
   } catch (error) {
     console.error('Erro ao inserir produto no banco de dados:', error);
     throw new Error('Erro ao inserir produto no banco de dados');
@@ -36,33 +28,32 @@ const inserirProduto = async (produtoData) => {
 
 const atualizarProduto = async (produtoData) => {
   try {
-    const { idProduto, nomeProduto, quantidadeProduto, precoProduto } = produtoData;
+    const { idProduto, nomeProduto, quantidadeProduto, precoProduto } =
+      produtoData;
 
-    // Valide os dados antes de realizar a atualização (se necessário)
-    if (!idProduto || !nomeProduto || quantidadeProduto === undefined || precoProduto === undefined) {
+    if (
+      !idProduto ||
+      !nomeProduto ||
+      quantidadeProduto === undefined ||
+      precoProduto === undefined
+    ) {
       throw new Error('Dados do produto incompletos ou inválidos.');
     }
 
-    // Lógica para atualizar o produto no banco de dados
-    const query = 'UPDATE teste SET nomeProduto = ?, quantidadeProduto = ?, precoProduto = ? WHERE idProduto = ?';
+    const query =
+      'UPDATE teste SET nomeProduto = ?, quantidadeProduto = ?, precoProduto = ? WHERE idProduto = ?';
     const values = [nomeProduto, quantidadeProduto, precoProduto, idProduto];
     await connection.execute(query, values);
 
-    // Recupere o produto atualizado, se necessário
-    // const [produtoAtualizado] = await connection.execute('SELECT * FROM teste WHERE idProduto = ?', [idProduto]);
-
     console.log('Produto atualizado com sucesso:');
-    // return produtoAtualizado;
   } catch (error) {
     console.error('Erro ao atualizar produto no banco de dados:', error);
     throw new Error('Erro ao atualizar produto no banco de dados');
   }
-
 };
 
 const deletarProduto = async (produtoData) => {
   try {
-    // Lógica para deletar o produto no banco de dados
     const query = 'DELETE FROM teste WHERE idProduto = ?';
     const values = [produtoData.idProduto];
     await connection.execute(query, values);
@@ -74,12 +65,9 @@ const deletarProduto = async (produtoData) => {
   }
 };
 
-
-
-
 module.exports = {
   getAll,
   inserirProduto,
   atualizarProduto,
-  deletarProduto
+  deletarProduto,
 };

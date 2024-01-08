@@ -19,3 +19,14 @@
     padding: 16px; 
     
   }
+
+  .padrao {
+    display: flex;
+    justify-content: center;
+    align-items: center;;
+  }
+
+  .m-25{
+    margin: 25px;
+  }
+

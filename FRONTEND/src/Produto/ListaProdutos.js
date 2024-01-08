@@ -13,6 +13,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import "../App.css";
 
 const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produtoParaRemover}) => {
 

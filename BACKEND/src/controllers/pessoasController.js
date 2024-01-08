@@ -9,7 +9,7 @@ const inserirPessoa = async (req, res) => {
   try {
     await pessoasModel.inserirPessoa(req.body);
 
-    return res.status(201).json({ mensagem: 'Pessoa inserida com sucesso'});
+    return res.status(201).json({ mensagem: 'Pessoa inserida com sucesso' });
   } catch (error) {
     console.error('Erro ao inserir Pessoa:', error.message);
 
@@ -26,14 +26,15 @@ const atualizarPessoa = async (req, res) => {
     return res.status(201).json({ mensagem: 'Pessoa atualizada com sucesso' });
   } catch (error) {
     console.error('Erro ao atualizar pessoa:', error.message);
-  
-    return res.status(500).json({ erro: 'Erro ao atualizar pessoa no banco de dados' });
-      
+
+    return res
+      .status(500)
+      .json({ erro: 'Erro ao atualizar pessoa no banco de dados' });
   }
 };
 
 module.exports = {
   getAll,
   inserirPessoa,
-  atualizarPessoa
+  atualizarPessoa,
 };

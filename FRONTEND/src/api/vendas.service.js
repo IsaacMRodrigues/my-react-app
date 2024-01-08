@@ -5,12 +5,12 @@ const apiGetVendas = async () => {
     const resposta = await fetch(`${URL_API}/vendas`);
 
     if (!resposta.ok) {
-      throw new Error("Falha na requisição");
+      throw new Error("Falha na requisição das vendas");
     }
 
     return await resposta.json();
   } catch (error) {
-    throw new Error("Não foi possível carregar os dados");
+    throw new Error("Não foi possível carregar as vendas");
   }
 };
 
@@ -24,19 +24,18 @@ const apiAddVenda = async (vendaProduto) => {
       body: JSON.stringify(vendaProduto),
     });
     if (!res.ok) {
-      throw new Error('Houve erro na adição da venda')
+      throw new Error("Houve erro na adição da venda");
     }
 
     return await res.json();
-
   } catch (error) {
-    console.error('Erro em apiAddVenda:', error);
-    throw new Error(error.message)
+    console.error("Erro em apiAddVenda:", error);
+    throw new Error(error.message);
   }
 };
 
 const apiAttVenda = async (vendaProduto) => {
-  console.log(JSON.stringify(vendaProduto))
+  console.log(JSON.stringify(vendaProduto));
   try {
     const res = await fetch(`${URL_API}/attvendas`, {
       method: "PUT",
@@ -46,15 +45,14 @@ const apiAttVenda = async (vendaProduto) => {
       body: JSON.stringify(vendaProduto),
     });
     if (!res.ok) {
-      throw new Error('Houve erro na atualização da venda')
+      throw new Error("Houve erro na atualização da venda");
     }
 
     return await res.json();
-
   } catch (error) {
-    console.error('Erro em apiAttVenda:', error);
-    throw new Error(error.message)
+    console.error("Erro em apiAttVenda:", error);
+    throw new Error(error.message);
   }
 };
 
-export { apiGetVendas, apiAddVenda, apiAttVenda};
+export { apiGetVendas, apiAddVenda, apiAttVenda };

@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
+import "../App.css";
 
 const Vendas = ({ vendas }) => {
 
@@ -15,7 +16,7 @@ const Vendas = ({ vendas }) => {
 
   const [searchTerm, setSearchTerm] = useState(dataAtualFormatada);
 
-  const filteredProdutos = vendas.filter((venda) => {
+  const filteredVendas = vendas.filter((venda) => {
   const vendaDate = new Date(venda.dataVenda).toISOString().split('T')[0];
     return vendaDate === searchTerm;
   });
@@ -40,7 +41,7 @@ const Vendas = ({ vendas }) => {
   }
 
   const calcularValorTotalGeral = () => {
-    return filteredProdutos.reduce(
+    return filteredVendas.reduce(
       (total, venda) => total + calcularValorTotal(venda),
       0
     );
@@ -49,8 +50,8 @@ const Vendas = ({ vendas }) => {
   return (
     <div>
       
-      <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Vendas:</h2>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <h2 className="padrao">Vendas:</h2>
+      <div className="padrao">
       <input
         type="date"
         placeholder="Pesquisar por nome do produto"
@@ -70,7 +71,7 @@ const Vendas = ({ vendas }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredProdutos.map((venda) => (
+          {filteredVendas.map((venda) => (
             <TableRow
               key={venda.idProduto}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -86,13 +87,13 @@ const Vendas = ({ vendas }) => {
           ))}
         </TableBody>
       </Table>
-      {filteredProdutos.length <= 0 && (
-            <h3 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Não há vendas nessa data</h3>
+      {filteredVendas.length <= 0 && (
+            <h3 className="padrao">Não há vendas nessa data</h3>
           )}
     </TableContainer>
-     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-    <Button style={{margin: '25px'}} variant="contained">Valor total do dia: R$ {calcularValorTotalGeral()}</Button>
-    <Button style={{margin: '25px'}}variant="contained">Valor Mensal: R$ {calcularValorMensal()}</Button>
+     <div className="padrao m-25">
+    <Button style={{margin: '5px'}} variant="contained">Valor total do dia: R$ {calcularValorTotalGeral()}</Button>
+    <Button style={{margin: '5px'}} variant="contained">Valor Mensal: R$ {calcularValorMensal()}</Button>
     </div>
     </div>
   );
