@@ -43,7 +43,6 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
   return (
     <>
       <div>
-        <h2 className="padrao">GARANTIAS</h2>
         <Box
           sx={{
             width: 1000,
@@ -122,6 +121,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
             onChange={() => setMostrarTodos(!mostrarTodos)}
           />
         </label>
+        {mostrarTodos &&
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -155,6 +155,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
             </TableBody>
           </Table>
         </TableContainer>
+}
       </div>
     </>
   );

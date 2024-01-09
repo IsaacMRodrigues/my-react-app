@@ -3,6 +3,7 @@ const produtosController = require('./controllers/produtosController');
 const vendasController = require('./controllers/vendasController');
 const pessoasController = require('./controllers/pessoasController');
 const garantiasController = require('./controllers/garantiasController');
+const servicosController = require('./controllers/servicosController');
 
 const router = express.Router();
 
@@ -12,6 +13,12 @@ router.get('/produtos', produtosController.getAll);
 router.post('/produtos', produtosController.inserirProduto);
 router.put('/atualizar', produtosController.atualizarProduto);
 router.delete('/deletar', produtosController.deletarProduto);
+
+//LISTA SERVIÇOS
+router.get('/servicos', servicosController.getAll);
+router.post('/servicos', servicosController.inserirServico);
+router.put('/atualizars', servicosController.atualizarServico);
+router.delete('/deletars', servicosController.deletarServico);
 
 //LISTA VENDAS
 router.get('/vendas', vendasController.getAll);

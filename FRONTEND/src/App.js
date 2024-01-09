@@ -25,15 +25,28 @@ import {
 } from "./api/garantias.service";
 import FormCadastroGarantia from "./Garantia/CadastroGarantias";
 import "./App.css";
-import TableServicos from "./Produto/ListaServicos";
+import TableServicos from "./Servicos/ListaServicos";
+import FormCadastroServico from "./Servicos/CadastroServico";
+import {
+  apiGetServicos,
+  apiAddServico,
+  apiAttServico,
+  apiDelServico,
+} from "./api/servicos.service";
+import FormAtualizarServico from "./Servicos/AtualizarServico";
+import Button from '@mui/material/Button';
 
 function App() {
   const [pessoas, setPessoas] = useState([]);
+  const [servicos, setServicos] = useState([]);
   const [garantias, setGarantias] = useState([]);
   const [dadosProdutos, setDadosProdutos] = useState([]);
   const [vendas, setVendas] = useState([]);
   const [dadoProduto, setDadoProduto] = useState([]);
+  const [dadoServico, setDadoServico] = useState([]);
   const [mostrarAtt, setMostrarAtt] = useState(false);
+  const [mostrarAttS, setMostrarAttS] = useState(false);
+  const [mostrarAddS, setMostrarAddS] = useState(true);
   const [mostrarAdd, setMostrarAdd] = useState(true);
   const [componenteAtivo, setComponenteAtivo] = useState("produto");
 
@@ -64,6 +77,15 @@ function App() {
     fetchProdutos();
   }, []);
 
+  //SERVIÇOS
+  useEffect(() => {
+    const fetchServicos = async () => {
+      const resultado = await apiGetServicos();
+      setServicos(resultado);
+    };
+    fetchServicos();
+  }, []);
+
   //VENDAS
   useEffect(() => {
     const fetchVendas = async () => {
@@ -84,6 +106,41 @@ function App() {
     }
   };
 
+  const salvarServico = async (novoServico) => {
+    try {
+      await apiAddServico(novoServico);
+
+      const novaListaDeServicos = await apiGetServicos();
+      setServicos(novaListaDeServicos);
+    } catch (error) {
+      console.error("Erro ao chamar apiAddServicos:", error);
+    }
+  };
+
+  const atualizarServico = async (novoServico) => {
+    try {
+      setMostrarAttS(false);
+      setMostrarAddS(true);
+      await apiAttServico(novoServico);
+
+      const novaListaDeServicos = await apiGetServicos();
+      setServicos(novaListaDeServicos);
+    } catch (error) {
+      console.error("Erro ao chamar apiAttServicos:", error);
+    }
+  };
+
+  const servicoParaRemover = async (servico) => {
+    try {
+      await apiDelServico(servico);
+
+      const novaListaDeServicos = await apiGetServicos();
+      setServicos(novaListaDeServicos);
+    } catch (error) {
+      console.error("Erro ao chamar apiDelServico:", error);
+    }
+  };
+
   const atualizarProduto = async (novoProduto) => {
     try {
       setMostrarAtt(false);
@@ -95,6 +152,12 @@ function App() {
     } catch (error) {
       console.error("Erro ao chamar apiAttProduto:", error);
     }
+  };
+
+  const servicoParaAtualizar = (servico) => {
+    setMostrarAttS(true);
+    setMostrarAddS(false);
+    setDadoServico(servico);
   };
 
   const produtoParaAtualizar = (produto) => {
@@ -196,8 +259,6 @@ function App() {
 
     //soma um na tabela vendas
     if (produtoVendido.quantidadeProduto > 0) {
-      console.log(dataAtualFormatada);
-      console.log(dataFormatada);
       if (dataAtualFormatada === dataFormatada) {
         const vendasAtualizadas = [...vendas];
 
@@ -261,17 +322,15 @@ function App() {
       <div>
         {"INICIO"}
         <div className="menu-container">
-          <button onClick={() => mostrarComponente("produto")}>Produtos</button>
-          <button onClick={() => mostrarComponente("servico")}>
-            Serviços
-          </button>
-          <button onClick={() => mostrarComponente("vendas")}>Vendas</button>
-          <button onClick={() => mostrarComponente("pessoa")}>
+          <Button variant="contained" onClick={() => mostrarComponente("produto")}>Produtos</Button>
+          <Button variant="contained" onClick={() => mostrarComponente("servico")}>Serviços</Button>
+          <Button variant="contained" onClick={() => mostrarComponente("vendas")}>Vendas</Button>
+          <Button variant="contained" onClick={() => mostrarComponente("pessoa")}>
             Dinheiro a receber
-          </button>
-          <button onClick={() => mostrarComponente("garantia")}>
+          </Button>
+          <Button variant="contained" onClick={() => mostrarComponente("garantia")}>
             Garantias
-          </button>
+          </Button>
         </div>
       </div>
       <div className="content-container">
@@ -292,9 +351,25 @@ function App() {
             produtoParaRemover={produtoParaRemover}
           />
         )}
-        {componenteAtivo === "servico" && (
-          <TableServicos adicionarVenda={adicionarVenda} />
+        {componenteAtivo === "servico" && mostrarAttS && (
+          <FormAtualizarServico
+            atualizar={atualizarServico}
+            servico={dadoServico}
+          />
         )}
+        {componenteAtivo === "servico" && mostrarAddS && (
+          <FormCadastroServico onSubmit={salvarServico} />
+        )}
+
+        {componenteAtivo === "servico" && (
+          <TableServicos
+            servicos={servicos}
+            adicionarVenda={adicionarVenda}
+            servicoParaAtualizar={servicoParaAtualizar}
+            servicoParaRemover={servicoParaRemover}
+          />
+        )}
+
         {componenteAtivo === "vendas" && <Vendas vendas={vendas} />}
         {componenteAtivo === "pessoa" && (
           <FormCadastroPessoa onSubmit={salvarPessoa} />
