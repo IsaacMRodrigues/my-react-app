@@ -35,7 +35,7 @@ const FormCadastroProduto = ({ onSubmit }) => {
   return (
     <div className="m-5">
     <form id="signForm" onSubmit={salvar}>
-    <h2 className="padrao">Cadastro de Produto</h2>
+    <h2 className="padrao">Cadastrar Produto</h2>
       <div className="padrao">
       
       <TextField style={{margin: '15px'}} id="outlined-basic" label="Nome do Produto" variant="outlined" value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)}  />

@@ -17,6 +17,14 @@ import "../App.css";
 
 const TableServicos = ({adicionarVenda}) => {
 
+  const venda = (formatacao) => {
+    const confirmarVenda = window.confirm('Você realmente deseja adicionar esse serviço em vendas ?');
+
+    if (confirmarVenda) {
+      adicionarVenda(formatacao)
+    }
+  };
+
 
     const formatacao = { 
         idProduto: 1,
@@ -27,8 +35,8 @@ const TableServicos = ({adicionarVenda}) => {
         console.log(formatacao);
 
   return (
-    <div className="m-5">
-
+    <div>
+      <h2 className="padrao">Serviços</h2>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -50,7 +58,7 @@ const TableServicos = ({adicionarVenda}) => {
               </TableCell>
               <TableCell align="center">{formatacao.nomeProduto}</TableCell>
               <TableCell align="center">R$ {formatacao.precoProduto}</TableCell>
-              <TableCell align="center"><Button variant="outlined" startIcon={<AddShoppingCartIcon/>} onClick={() => adicionarVenda(formatacao)}>Adicionar à Venda</Button></TableCell>
+              <TableCell align="center"><Button variant="outlined" startIcon={<AddShoppingCartIcon/>} onClick={() => venda(formatacao)}>Adicionar à Venda</Button></TableCell>
             </TableRow>
         </TableBody>
       </Table>

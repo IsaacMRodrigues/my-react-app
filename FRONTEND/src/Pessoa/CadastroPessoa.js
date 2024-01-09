@@ -24,14 +24,14 @@ const FormCadastroPessoa = ({ onSubmit }) => {
       alert("Por favor, preencha todos os campos antes de cadastrar.");
       return;
     } else {
+
       const dataCompraObj = new Date(dataCompra);
-      setDataCompra(dataCompraObj.toISOString().split("T")[0]);
       setPago(false);
 
       const novaPessoa = {
         nomePessoa,
         telefonePessoa,
-        dataCompra,
+        dataCompra: dataCompraObj.toISOString().split("T")[0],
         valorCompra,
         descricaoCompra,
         pago,
@@ -55,7 +55,7 @@ const FormCadastroPessoa = ({ onSubmit }) => {
       <h2
         className="padrao"
       >
-        Cadastro PESSOA
+        Cadastrar Devedor
       </h2>
       <div
         className="padrao"

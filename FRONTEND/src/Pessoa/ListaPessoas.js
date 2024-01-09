@@ -16,6 +16,14 @@ const TablePessoas = ({ pessoas, pessoaParaAtualizar }) => {
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const pagar = (pessoa) => {
+    const confirmarPago = window.confirm('Você realmente deseja marcar como pago ?');
+
+    if (confirmarPago) {
+      definirPago(pessoa)
+    }
+  };
+
   const filteredPessoas = pessoas.filter((pessoa) => {
     const pagoMatch =
       (mostrarTodos || pessoa.pago === 0) &&
@@ -73,7 +81,7 @@ const TablePessoas = ({ pessoas, pessoaParaAtualizar }) => {
         />
       </Box>
       <label
-        className="padrao"
+        className="padrao m-25"
       >
         Mostrar Todos
         <input
@@ -133,7 +141,7 @@ const TablePessoas = ({ pessoas, pessoaParaAtualizar }) => {
                       <TableCell align="center">
                         <Button
                           variant="outlined"
-                          onClick={() => definirPago(pessoa)}
+                          onClick={() => pagar(pessoa)}
                         >
                           Definir como pago
                         </Button>

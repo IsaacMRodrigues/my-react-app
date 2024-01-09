@@ -262,6 +262,9 @@ function App() {
         {"INICIO"}
         <div className="menu-container">
           <button onClick={() => mostrarComponente("produto")}>Produtos</button>
+          <button onClick={() => mostrarComponente("servico")}>
+            Serviços
+          </button>
           <button onClick={() => mostrarComponente("vendas")}>Vendas</button>
           <button onClick={() => mostrarComponente("pessoa")}>
             Dinheiro a receber
@@ -289,7 +292,7 @@ function App() {
             produtoParaRemover={produtoParaRemover}
           />
         )}
-        {componenteAtivo === "vendas" && (
+        {componenteAtivo === "servico" && (
           <TableServicos adicionarVenda={adicionarVenda} />
         )}
         {componenteAtivo === "vendas" && <Vendas vendas={vendas} />}

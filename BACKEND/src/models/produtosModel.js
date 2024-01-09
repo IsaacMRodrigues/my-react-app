@@ -1,7 +1,7 @@
 const connection = require('./connection');
 
 const getAll = async () => {
-  const [rows] = await connection.execute('SELECT * FROM teste');
+  const [rows] = await connection.execute('SELECT * FROM produtos');
 
   const produtos = rows.map((row) => ({
     idProduto: row.idProduto,
@@ -17,7 +17,7 @@ const inserirProduto = async (produtoData) => {
   try {
     const { nomeProduto, quantidadeProduto, precoProduto } = produtoData;
     const query =
-      'INSERT INTO teste (nomeProduto, quantidadeProduto, precoProduto) VALUES (?, ?, ?)';
+      'INSERT INTO produtos (nomeProduto, quantidadeProduto, precoProduto) VALUES (?, ?, ?)';
     const values = [nomeProduto, quantidadeProduto, precoProduto];
     await connection.execute(query, values);
   } catch (error) {
@@ -41,7 +41,7 @@ const atualizarProduto = async (produtoData) => {
     }
 
     const query =
-      'UPDATE teste SET nomeProduto = ?, quantidadeProduto = ?, precoProduto = ? WHERE idProduto = ?';
+      'UPDATE produtos SET nomeProduto = ?, quantidadeProduto = ?, precoProduto = ? WHERE idProduto = ?';
     const values = [nomeProduto, quantidadeProduto, precoProduto, idProduto];
     await connection.execute(query, values);
 
@@ -54,7 +54,7 @@ const atualizarProduto = async (produtoData) => {
 
 const deletarProduto = async (produtoData) => {
   try {
-    const query = 'DELETE FROM teste WHERE idProduto = ?';
+    const query = 'DELETE FROM produtos WHERE idProduto = ?';
     const values = [produtoData.idProduto];
     await connection.execute(query, values);
 

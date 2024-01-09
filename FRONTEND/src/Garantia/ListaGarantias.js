@@ -19,7 +19,14 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtra os produtos com base no termo de pesquisa
+  const excluir = (garantia) => {
+    const confirmarExclusao = window.confirm('Você realmente deseja excluir essa garantia ?');
+
+    if (confirmarExclusao) {
+      garantiaParaRemover(garantia)
+    }
+  };
+
   const filteredGarantias = garantias.filter(
     (garantia) =>
       garantia.dataGarantia >= dataAtual &&
@@ -36,7 +43,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
   return (
     <>
       <div>
-        <h1 className="padrao">GARANTIAS</h1>
+        <h2 className="padrao">GARANTIAS</h2>
         <Box
           sx={{
             width: 1000,
@@ -93,7 +100,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
                       color="error"
                       variant="outlined"
                       startIcon={<DeleteIcon />}
-                      onClick={() => garantiaParaRemover(garantia)}
+                      onClick={() => excluir(garantia)}
                     >
                       Excluir
                     </Button>

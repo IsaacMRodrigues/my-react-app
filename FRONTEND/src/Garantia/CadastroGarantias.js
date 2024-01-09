@@ -43,7 +43,7 @@ const FormCadastroGarantia = ({ onSubmit }) => {
       <h2
         className="padrao"
       >
-        Cadastro
+        Cadastrar Garantia
       </h2>
       <div
         className="padrao"

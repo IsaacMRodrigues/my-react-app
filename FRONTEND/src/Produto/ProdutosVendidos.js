@@ -64,9 +64,9 @@ const Vendas = ({ vendas }) => {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell align="center">Nome do Produto</TableCell>
-            <TableCell align="center">Quantidade do Produto</TableCell>
-            <TableCell align="center">Data da Venda</TableCell>
+            <TableCell align="center">Nome</TableCell>
+            <TableCell align="center">Quantidade</TableCell>
+            <TableCell align="center">Data</TableCell>
             <TableCell align="center">Valor Total</TableCell>
           </TableRow>
         </TableHead>

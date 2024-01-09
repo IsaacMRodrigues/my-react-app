@@ -17,6 +17,21 @@ import "../App.css";
 
 const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produtoParaRemover}) => {
 
+  const remover = (produto) => {
+    const confirmarExclusao = window.confirm('Você realmente deseja excluir este produto?');
+
+    if (confirmarExclusao) {
+      produtoParaRemover(produto)
+    }
+  };
+  const venda = (produto) => {
+    const confirmarVenda = window.confirm('Você realmente deseja adicionar esse produto em vendas ?');
+
+    if (confirmarVenda) {
+      adicionarVenda(produto)
+    }
+  };
+
 
   const [searchTerm, setSearchTerm] = useState("");
   // Filtra os produtos com base no termo de pesquisa
@@ -72,8 +87,8 @@ const TableProdutos = ({ produtos, adicionarVenda, produtoParaAtualizar, produto
               <TableCell align="center">{produto.quantidadeProduto}</TableCell>
               <TableCell align="center">R$ {produto.precoProduto}</TableCell>
               <TableCell align="center"><Button variant="outlined" startIcon={<EditIcon/>} onClick={() => produtoParaAtualizar(produto)}>Editar</Button></TableCell>
-              <TableCell align="center"><Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => produtoParaRemover(produto)}>Excluir</Button></TableCell>
-              <TableCell align="center"><Button variant="outlined" startIcon={<AddShoppingCartIcon/>} onClick={() => adicionarVenda(produto)}>Adicionar à Venda</Button></TableCell>
+              <TableCell align="center"><Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => remover(produto)}>Excluir</Button></TableCell>
+              <TableCell align="center"><Button variant="outlined" startIcon={<AddShoppingCartIcon/>} onClick={() => venda(produto)}>Adicionar à Venda</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
