@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import "../App.css";
 
 const TableGarantias = ({ garantias, garantiaParaRemover }) => {
@@ -18,6 +20,37 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
   const dataAtual = new Date(dataCompraObj).toISOString().split("T")[0];
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleGeneratePDF = (garantia) => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text('Recibo de Compra', 85, 10);
+
+    // Adiciona informações da compra
+    doc.setFontSize(12);
+    doc.text(`Nome: ${garantia.nomePessoa}`, 20, 20);
+    doc.text(`Garantia nº: ${garantia.idGarantia}`, 140, 20);
+    doc.text(`Produto: ${garantia.produtoPessoa}`, 20, 30);
+    doc.text(`Valor: R$ ${garantia.precoProduto}`, 140, 30);
+    doc.text(`Data da Compra: ${new Date().toLocaleDateString()}`, 20, 40);
+    doc.text(`Garantia até: ${new Date(garantia.dataGarantia).toLocaleDateString()}`, 140, 40);
+
+    // Adiciona a tabela com detalhes
+    doc.autoTable({
+      startY: 60,
+      head: [['Item', 'Produto', 'Quantidade', 'Preço Unitário']],
+      body: [
+        ['1', garantia.produtoPessoa, '1', `R$ ${garantia.precoProduto}`],
+      ],
+      theme: 'striped',
+      styles: {
+        fontSize: 10,
+      },
+    });
+
+    doc.save(`recibo_compra_${garantia.nomePessoa}.pdf`);
+  };
 
   const excluir = (garantia) => {
     const confirmarExclusao = window.confirm('Você realmente deseja excluir essa garantia ?');
@@ -66,7 +99,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
           />
         </Box>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table id="tabela-garantias" sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
@@ -104,6 +137,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
                       Excluir
                     </Button>
                   </TableCell>
+                  <TableCell align="center"><Button variant="outlined" onClick={() => handleGeneratePDF(garantia)}>Gerar PDF</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -156,6 +190,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
           </Table>
         </TableContainer>
 }
+
       </div>
     </>
   );

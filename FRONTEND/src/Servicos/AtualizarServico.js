@@ -7,7 +7,7 @@ const FormAtualizarServico = ({ atualizar, servico }) => {
 
   const [idProduto ] = useState(servico.idProduto)
   const [nomeProduto, setNomeProduto] = useState(servico.nomeProduto);
-  const [quantidadeProduto, setQuantidadeProduto] = useState(servico.quantidadeProduto);
+  const [quantidadeProduto] = useState(servico.quantidadeProduto);
   const [precoProduto, setPrecoProduto] = useState(servico.precoProduto);
 
   const salvar = (event) => {

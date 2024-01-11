@@ -15,6 +15,8 @@ const apiGetGarantias = async () => {
 };
 
 const apiAddGarantia = async (novaGarantia) => {
+  console.log("teste");
+  console.log(JSON.stringify(novaGarantia))
   try {
     const res = await fetch(`${URL_API}/garantias`, {
       method: "POST",

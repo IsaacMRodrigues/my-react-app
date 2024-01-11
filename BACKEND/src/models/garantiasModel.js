@@ -9,6 +9,7 @@ const getAll = async () => {
     telefonePessoa: row.telefonePessoa,
     produtoPessoa: row.produtoPessoa,
     dataGarantia: row.dataGarantia,
+    precoProduto: row.precoProduto
   }));
 
   return produtos;
@@ -16,11 +17,11 @@ const getAll = async () => {
 
 const inserirGarantia = async (garantiaData) => {
   try {
-    const { nomePessoa, telefonePessoa, produtoPessoa, dataGarantia } =
+    const { nomePessoa, telefonePessoa, produtoPessoa, dataGarantia, precoProduto } =
       garantiaData;
     const query =
-      'INSERT INTO garantias (nomePessoa, telefonePessoa, produtoPessoa, dataGarantia) VALUES (?, ?, ?, ?)';
-    const values = [nomePessoa, telefonePessoa, produtoPessoa, dataGarantia];
+      'INSERT INTO garantias (nomePessoa, telefonePessoa, produtoPessoa, dataGarantia, precoProduto) VALUES (?, ?, ?, ?, ?)';
+    const values = [nomePessoa, telefonePessoa, produtoPessoa, dataGarantia, precoProduto];
     await connection.execute(query, values);
   } catch (error) {
     console.error('Erro ao inserir garantia no banco de dados:', error);

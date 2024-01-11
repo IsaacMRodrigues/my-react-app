@@ -200,6 +200,7 @@ function App() {
   };
 
   const salvarGarantia = async (novaGarantia) => {
+    console.log("teste");
     try {
       await apiAddGarantia(novaGarantia);
 

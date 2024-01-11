@@ -8,11 +8,12 @@ const FormCadastroGarantia = ({ onSubmit }) => {
   const [telefonePessoa, setTelefonePessoa] = useState("");
   const [produtoPessoa, setProdutoPessoa] = useState("");
   const [mesesGarantia, setMesesGarantia] = useState(0);
+  const [precoProduto, setPrecoProduto] = useState(0);
 
   const salvar = (event) => {
     event.preventDefault();
 
-    if (!nomePessoa || !telefonePessoa || !produtoPessoa || !mesesGarantia) {
+    if (!nomePessoa || !telefonePessoa || !produtoPessoa || !mesesGarantia || !precoProduto) {
       alert("Por favor, preencha todos os campos antes de cadastrar.");
       return;
     } else {
@@ -25,6 +26,7 @@ const FormCadastroGarantia = ({ onSubmit }) => {
         telefonePessoa,
         produtoPessoa,
         dataGarantia: dataFormatada,
+        precoProduto
       };
 
       if (onSubmit) {
@@ -34,7 +36,7 @@ const FormCadastroGarantia = ({ onSubmit }) => {
       setNomePessoa("");
       setTelefonePessoa("");
       setProdutoPessoa("");
-      setMesesGarantia(new Date());
+      setMesesGarantia(0);
     }
   };
 
@@ -79,6 +81,15 @@ const FormCadastroGarantia = ({ onSubmit }) => {
           variant="outlined"
           value={mesesGarantia}
           onChange={(e) => setMesesGarantia(e.target.value)}
+        />
+                <TextField
+          style={{margin: '15px'}}
+          type="number"
+          id="outlined-basic"
+          label="Valor do Produto"
+          variant="outlined"
+          value={precoProduto}
+          onChange={(e) => setPrecoProduto(e.target.value)}
         />
       </div>
       <div
