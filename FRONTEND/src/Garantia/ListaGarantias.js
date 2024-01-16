@@ -36,7 +36,7 @@ const TableGarantias = ({ garantias, garantiaParaRemover }) => {
     doc.text(`Data da Compra: ${new Date().toLocaleDateString()}`, 20, 40);
     doc.text(`Garantia até: ${new Date(garantia.dataGarantia).toLocaleDateString()}`, 140, 40);
 
-    // Adiciona a tabela com detalhes
+    // Criar a tabela
     doc.autoTable({
       startY: 60,
       head: [['Item', 'Produto', 'Quantidade', 'Preço Unitário']],
